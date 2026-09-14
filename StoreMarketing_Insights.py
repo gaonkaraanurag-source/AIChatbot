@@ -38,22 +38,32 @@ llm = ChatGroq(
     temperature=0
 )
 
-messages = [
-    (
-        "system",
-        "You are a sales and marketing data analyst. "
-        "Use only the dataset summary provided by the user. "
-        "Give clear business insights, not generic advice.",
-    ),
-    (
-        "human",
+system_messages = (
+            "You are a sales and marketing data analyst. "
+            "Use only the dataset summary provided by the user. "
+            "Give clear business insights, not generic advice."
+            "If the dataset summary does not contain enough information to answer, say what is missing."
+    )
+print("\nSales & Marketing Insights Q&A Bot")
+print("Ask a question about the dataset.")
+print("Type 'exit' to quit.\n")
+
+while True:
+    questions=input("Enter your question: ")
+    if questions.lower() in ['exit', 'quit']:
+        print("Exiting the program.")
+        break
+    messages =[
+        ("system", system_messages),
+        (
+            "human",
         f"""
 Here is a summary of our sales and marketing dataset:
 
 {data_summary}
 
 Question:
-What are the top 5 sales and marketing insights from this data?
+{questions}
 """,
     ),
 ]
